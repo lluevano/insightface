@@ -47,7 +47,6 @@ def count_conv_flops(input_shape, output_shape, attr):
 
 def count_flops(sym, **data_shapes):
   all_layers = sym.get_internals()
-  #print(all_layers)
   arg_shapes, out_shapes, aux_shapes = all_layers.infer_shape(**data_shapes)
   out_shape_dict = dict(zip(all_layers.list_outputs(), out_shapes))
 
@@ -60,6 +59,7 @@ def count_flops(sym, **data_shapes):
       nodeid_shape[nodeid] = out_shape_dict[layer_name]
   #print(nodeid_shape)
   FLOPs = 0
+  nlayers = 0
   for nodeid, node in enumerate(nodes):
     flops = 0
     if node['op']=='Convolution':
@@ -69,7 +69,10 @@ def count_flops(sym, **data_shapes):
       input_nodeid = node['inputs'][0][0]
       input_shape = nodeid_shape[input_nodeid]
       flops = count_conv_flops(input_shape, output_shape, attr)
+      print(name + str(input_shape))
+      nlayers+=1
     elif node['op']=='FullyConnected':
+      name = node['name']
       attr = node['attrs']
       output_shape = nodeid_shape[nodeid]
       input_nodeid = node['inputs'][0][0]
@@ -78,9 +81,11 @@ def count_flops(sym, **data_shapes):
       input_filter = input_shape[1]*input_shape[2]*input_shape[3]
       #assert len(input_shape)==4 and input_shape[2]==1 and input_shape[3]==1
       flops = count_fc_flops(input_filter, output_filter, attr)
+      nlayers+=1
+      print(name + str(input_shape))
     #print(node, flops)
     FLOPs += flops
-
+  print("Nlayers = "+str(nlayers))
   return FLOPs
 
 def flops_str(FLOPs):
@@ -89,9 +94,9 @@ def flops_str(FLOPs):
   for p in preset:
     if FLOPs//p[0]>0:
       N = FLOPs/p[0]
-      ret = "%.1f%s"%(N, p[1])
+      ret = "%.2f%s"%(N, p[1])
       return ret
-  ret = "%.1f"%(FLOPs)
+  ret = "%.2f"%(FLOPs)
   return ret
 
 if __name__ == '__main__':
