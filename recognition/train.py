@@ -40,6 +40,7 @@ import fsqueezenet1_1_no_pool
 import fmobilefacenetv1
 import fmobilenetv2_mxnet
 import vargfacenet
+import mobilenetv3
 
 import sys
 if sys.version_info < (3,):
@@ -252,11 +253,12 @@ def train_net(args):
       if config.ce_loss:
         metric2 = LossValueMetric()
         eval_metrics.append( mx.metric.create(metric2) )
-    gaussian_nets = ['fresnet','fmobilefacenet','fsqueezefacenet_v1','fsqueezefacenet_v2', 'fshufflefacenetv2', 'fshufflenetv1','fsqueezenet1_0','fsqueezenet1_1', 'fsqueezenet1_2', 'fsqueezenet1_1_no_pool','fmobilenetv2','fmobilefacenetv1','fmobilenetv2_mxnet','vargfacenet']
+    gaussian_nets = ['fresnet','fmobilefacenet','fsqueezefacenet_v1','fsqueezefacenet_v2', 'fshufflefacenetv2', 'fshufflenetv1','fsqueezenet1_0','fsqueezenet1_1', 'fsqueezenet1_2', 'fsqueezenet1_1_no_pool','fmobilenetv2','fmobilefacenetv1','fmobilenetv2_mxnet','vargfacenet', 'mobilenetv3']
     if config.net_name in gaussian_nets:
 
 #    if config.net_name=='fresnet' or config.net_name=='fmobilefacenet' or config.net_name=='fsqueezefacenet_v1' or config.net_name=='fsqueezefacenet_v2' or config.net_name=='fshufflefacenetv2' or config.net_name =='fefficientnet' or config.net_name == 'fshufflenetv1' or config.net_name == 'fsqueezenet1_0' or config.net_name == 'fsqueezenet1_1' or config.net_name =='fsqueezenet1_2' or config.net_name == 'fsqueezenet1_1_no_pool' or config.net_name == 'fmobilenetv2':
       initializer = mx.init.Xavier(rnd_type='gaussian', factor_type="out", magnitude=2) #resnet style
+      print("GAUSSIAN INITIALIZER")
     else:
       initializer = mx.init.Xavier(rnd_type='uniform', factor_type="in", magnitude=2)
       print("UNIFORM INITIALIZER")

@@ -151,6 +151,13 @@ network.mobilenetv2.act_type = 'relu'
 network.mobilenetv2.net_act = 'relu'
 network.mobilenetv2.width_multiplier = 1.0
 
+network.mobilenetv3 = edict()
+network.mobilenetv3.net_name = 'mobilenetv3'
+network.mobilenetv3.emb_size = 256
+network.mobilenetv3.net_output = 'E' 
+network.mobilenetv3.mode = 'small'  
+#network.mobilenetv3.act_type = 'relu'
+#network.mobilenetv3.net_act = 'relu'
 
 network.squeezev2 = edict()
 network.squeezev2.net_name = 'fsqueezefacenet_v2'
