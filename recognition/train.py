@@ -30,7 +30,7 @@ import fdensenet
 import fsqueezefacenet_v1
 import fsqueezefacenet_v2
 import fshufflefacenetv2
-import fefficientnet
+import efficientnet
 import fshufflenetv1
 import fsqueezenet1_0
 import fsqueezenet1_1
