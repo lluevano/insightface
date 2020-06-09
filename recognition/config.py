@@ -153,11 +153,10 @@ network.mobilenetv2.width_multiplier = 1.0
 
 network.mobilenetv3 = edict()
 network.mobilenetv3.net_name = 'mobilenetv3'
-network.mobilenetv3.emb_size = 256
+network.mobilenetv3.emb_size = 1024 #1024 for small, 1280 for large 
 network.mobilenetv3.net_output = 'E' 
-network.mobilenetv3.mode = 'small'  
-#network.mobilenetv3.act_type = 'relu'
-#network.mobilenetv3.net_act = 'relu'
+network.mobilenetv3.mode = 'small' #['small','large']  
+
 
 network.squeezev2 = edict()
 network.squeezev2.net_name = 'fsqueezefacenet_v2'
@@ -169,12 +168,12 @@ network.shufflev2 = edict()
 network.shufflev2.net_name = 'fshufflefacenetv2'
 network.shufflev2.emb_size = 128
 network.shufflev2.net_output = 'GDC'
-network.shufflev2.depth_multiplier = 1.5   #  [0.5, 1.0, 1.5, 2.0]
+network.shufflev2.depth_multiplier = 0.5   #  [0.5, 1.0, 1.5, 2.0]
 
-network.efficient = edict()
-network.efficient.net_name = 'fefficientnet'
-network.efficient.emb_size = 256
-network.efficient.net_output = 'GDC'
+network.efficientnet = edict()
+network.efficientnet.net_name = 'efficientnet'
+network.efficientnet.emb_size = 1280
+network.efficientnet.net_output = 'J'
 
 network.shufflev1_orig = edict()
 network.shufflev1_orig.net_name = 'fshufflenetv1'
@@ -332,12 +331,15 @@ default.loss = 'arcface'
 default.frequent = 20
 default.verbose = 2000
 default.kvstore = 'local'
+default.optimizer = 'SGD'
+default.initializer = 'gaussian'
+
 
 default.end_epoch = 10000
 default.lr = 0.1
 default.wd = 0.0005
 default.mom = 0.9
-default.per_batch_size = 64
+default.per_batch_size = 128
 default.ckpt = 3
 default.lr_steps = '100000,160000,220000'
 default.models_root = './models'
